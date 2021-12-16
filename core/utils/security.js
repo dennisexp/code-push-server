@@ -12,6 +12,11 @@ var randToken = require('rand-token').generator({
     chars: '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ',
     source: 'crypto',
 });
+
+/**
+ * added by dennise at 2021-12-16 for security.calcAllFilesBySha256
+ */
+const ignore_list = ['.codepushrelease', '.DS_Store', '__MACOSX'];
 var security = {};
 module.exports = security;
 
@@ -58,6 +63,7 @@ security.stringSha256Sync = function (contents) {
     return sha256.digest('hex');
 };
 
+
 security.packageHashSync = function (jsonData) {
     var sortedArr = security.sortJsonToArr(jsonData);
     var manifestData = _.filter(sortedArr, (v) => {
@@ -93,6 +99,12 @@ security.qetag = function (buffer) {
     });
 };
 
+/**
+ * out-of-date and to be deleted
+ * script: 2021-12-16
+ * @param {*} files 
+ * @returns 
+ */
 security.sha256AllFiles = function (files) {
     return new Promise((resolve, reject) => {
         var results = {};
@@ -178,6 +190,61 @@ security.isPackageHashIgnored = function (relativePath) {
     );
 };
 
+/**
+ * added by dennise at 2021-12-16 replace security.calcAllFileSha256
+ * key = relative path of each file
+ * value = sha256(file)
+ * @param {*} directory_path 
+ * @param {*} prefix 
+ * @param {*} manifest_entries 
+ * @returns json
+ */
+security.calcAllFilesBySha256 = (directory_path, prefix='', manifest_entries={}) => {
+    return new Promise(async(resolve, reject) => {
+        let path = require('path');
+        try {
+            let file_list = fs.readdirSync(directory_path, {encoding: 'utf-8'});
+            if (file_list==null || file_list.length==0) {
+                return resolve({});
+            }
+
+            for (const file of file_list) {
+                let relative_path = path.join(prefix, file);
+                if (ignore_list.includes(file)) {
+                    // console.log('ignored file:', relative_path);
+                    log.debug(`ignored file:`, relative_path);
+                    continue;
+                }
+                
+                let absolute_path = path.join(directory_path, file);
+                if (fs.statSync(absolute_path).isDirectory()) {
+                    // console.log(absolute_path);
+                    log.debug(absolute_path);
+                    await security.calcAllFilesBySha256(absolute_path, relative_path, manifest_entries);
+                }else{
+                    let hash = await security.fileSha256(absolute_path);
+                    manifest_entries[relative_path]=hash;
+                }
+            }
+
+            resolve(manifest_entries);
+        } catch (error) {
+            // log.debug(`calcAllFilesBySha256 error:`, e);
+            reject(error);
+        }
+    }).catch((e) => { 
+        console.log(e);
+        log.debug(`calcAllFilesBySha256 error:`, e);
+        return {};
+    });
+}
+
+/**
+ * out-of-date and to be deleted
+ * script: 2021-12-16
+ * @param {*} directoryPath 
+ * @returns 
+ */
 security.calcAllFileSha256 = function (directoryPath) {
     return new Promise((resolve, reject) => {
         var recursive = require('recursive-readdir');

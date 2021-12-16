@@ -1,6 +1,8 @@
-# CodePush Server [source](https://github.com/lisong/code-push-server)
+# CodePush Server [source](https://github.com/dennisexp/code-push-server)
 
-[![NPM](https://nodei.co/npm/code-push-server.svg?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/code-push-server/)
+注意：此版本的code-push-server在上传热更新资源文件的时候，生成files hash的规则修改了下，主要是和 capacitor-codepush (https://github.com/dennisexp/capacitor-codepush)的规则一致，使用时请注意。
+
+<!-- [![NPM](https://nodei.co/npm/code-push-server.svg?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/code-push-server/) -->
 
 [![NPM Version](https://img.shields.io/npm/v/code-push-server.svg)](https://npmjs.org/package/code-push-server)
 [![Node.js Version](https://img.shields.io/node/v/code-push-server.svg)](https://nodejs.org/en/download/)
@@ -65,6 +67,7 @@ $ code-push login http://api.code-push.com #登录
 -   [normal](https://github.com/lisong/code-push-server/blob/master/docs/react-native-code-push.md)
 -   [react-native-code-push](https://github.com/Microsoft/react-native-code-push)
 -   [code-push](https://github.com/Microsoft/code-push)
+-   [capacitor-codepush](https://github.com/dennisexp/capacitor-codepush)
 
 ## ISSUES
 

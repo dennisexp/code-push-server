@@ -1,11 +1,11 @@
 {
   "name": "@shm-open/code-push-server",
   "description": "CodePush service is hotupdate services which adapter react-native-code-push and cordova-plugin-code-push",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/shm-open/code-push-server.git"
+    "url": "https://github.com/dennisexp/code-push-server.git"
   },
   "keywords": [
     "code-push",
@@ -15,7 +15,7 @@
     "code",
     "push"
   ],
-  "author": "shihuimiao",
+  "author": "dennisexp",
   "bin": {
     "code-push-server": "./bin/www",
     "code-push-server-db": "./bin/db"

@@ -63,7 +63,8 @@ proto.validateStore = function (providePackageHash) {
         log.debug(`validateStore providePackageHash not exist`);
         return Promise.resolve(false);
     }
-    return security.calcAllFileSha256(contentPath).then((manifestJson) => {
+    //replace by dennise at 2021-12-16: security.calcAllFileSha256
+    return security.calcAllFilesBySha256(contentPath).then((manifestJson) => {
         var packageHash = security.packageHashSync(manifestJson);
         log.debug(`validateStore packageHash:`, packageHash);
         try {
@@ -89,7 +90,8 @@ proto.storePackage = function (sourceDst, force) {
         force = false;
     }
     var self = this;
-    return security.calcAllFileSha256(sourceDst).then((manifestJson) => {
+    //replace by dennise at 2021-12-16: security.calcAllFileSha256
+    return security.calcAllFilesBySha256(sourceDst).then((manifestJson) => {
         var packageHash = security.packageHashSync(manifestJson);
         log.debug('storePackage manifestJson packageHash:', packageHash);
         var dataDir = self.getDataDir();

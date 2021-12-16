@@ -1,6 +1,6 @@
 # CodePush Server [source](https://github.com/dennisexp/code-push-server)
 
-注意：此版本的code-push-server在上传热更新资源文件的时候，生成files hash的规则修改了下，主要是和 capacitor-codepush (https://github.com/dennisexp/capacitor-codepush)的规则一致，使用时请注意。
+注意：此版本的code-push-server在上传热更新资源文件的时候，生成files hash的规则修改了下，主要是和 capacitor-codepush (https://github.com/dennisexp/capacitor-codepush) 的规则一致，使用时请注意。
 
 <!-- [![NPM](https://nodei.co/npm/code-push-server.svg?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/code-push-server/) -->
 

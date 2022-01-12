@@ -73,7 +73,8 @@ security.packageHashSync = function (jsonData) {
     });
     log.debug('packageHashSync manifestData:', manifestData);
     var manifestString = JSON.stringify(manifestData.sort());
-    manifestString = _.replace(manifestString, /\\\//g, '/');
+     //将windows下的路径反斜杠转为斜杠---modified by dennise at 2022-1-12
+    manifestString = _.replace(manifestString, /(\\|\/)+/g, '/');
     log.debug('packageHashSync manifestString:', manifestString);
     return security.stringSha256Sync(manifestString);
 };
